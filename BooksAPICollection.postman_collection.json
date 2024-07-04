@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "abe2c0c6-c434-4a14-b826-b04e64b0c0e0",
+		"name": "BooksAPICollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32202433"
+	},
+	"item": [
+		{
+			"name": "Createtoken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test the status\",()=>\r",
+							"{pm.response.to.eql(201)})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"rosemary\",\r\n   \"clientEmail\": \"rosemary123@example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/api-clients/",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"api-clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StatusCheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"to validate the body\",()=>\r",
+							"{var jsonBODY=pm.response.json();\r",
+							"pm.expect(jsonBODY.status).to.eql(\"OK\")})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://simple-books-api.glitch.me/status",
+					"protocol": "https",
+					"host": [
+						"simple-books-api",
+						"glitch",
+						"me"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListOfBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check status\",()=>\r",
+							"{pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"pm.expect(pm.response.code).to.eql(200)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).is.eql(\"application/json; charset=utf-8\")\r",
+							"});\r",
+							"var jsonData =pm.response.json();\r",
+							"console.log(\"id is\"+ jsonData[1].id);\r",
+							"pm.test(\"to validate body\",()=>\r",
+							"{\r",
+							"   \r",
+							"   \r",
+							"pm.expect(jsonData[1].id).to.eql(2)});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/books/",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"books",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ListOfBooks",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-books-api.glitch.me//books/",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"",
+								"books",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 18 Jun 2024 12:06:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "417"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"1a1-MfqhfTYtZO2sguD1mJq8Vf41WjU\""
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"The Russian\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Just as I Am\",\n        \"type\": \"non-fiction\",\n        \"available\": false\n    },\n    {\n        \"id\": 3,\n        \"name\": \"The Vanishing Half\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 4,\n        \"name\": \"The Midnight Library\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Untamed\",\n        \"type\": \"non-fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Viscount Who Loved Me\",\n        \"type\": \"fiction\",\n        \"available\": true\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "singleBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"To test the status\",()=>\r",
+							"{ pm.response.to.have.status(200)\r",
+							"pm.expect(pm.response.status).to.eql(\"OK\")});\r",
+							"pm.test(\"to validate headers\",()=>\r",
+							"{pm.expect(pm.response.headers.get(\"Content-Type\")).is.eql(\"application/json; charset=utf-8\");\r",
+							"pm.response.to.have.header(\"Content-Type\")})\r",
+							"var jsonBody=pm.response.json();\r",
+							"pm.test(\"to validate the response body \",()=>\r",
+							"{pm.expect(jsonBody.name).is.eql(\"The Russian\");\r",
+							"pm.expect(jsonBody.name).is.a(\"string\");\r",
+							"pm.expect(jsonBody.id).is.a(\"number\")});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/books/1",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submitneworder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonBody=pm.response.json();\r",
+							"console.log(jsonBody.orderId);\r",
+							"pm.environment.set(\"orderId_env\",jsonBody.orderId)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "0ba86963aa51c2087931c5009f5c7e1cae475a051ece6ae40039f63dd411fb07",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 1,\r\n  \"customerName\": \"rosemary\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/orders",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getallorders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonBody=pm.response.json();\r",
+							"var newid=pm.environment.get(\"orderId_env\");\r",
+							"pm.test(\"to validate the response body\",()=>\r",
+							"{\r",
+							"   \r",
+							"    pm.expect(jsonBody.id).to.eql(pm.environment.get(\"orderId_env\"))\r",
+							"//.get(\"customerName\")).is.eql(\"rosemary\")\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "0ba86963aa51c2087931c5009f5c7e1cae475a051ece6ae40039f63dd411fb07",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/orders",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getsingleorder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonBody=pm.response.json();\r",
+							"pm.test(\"to validate the response body\",()=>\r",
+							"{pm.expect(jsonBody.customerName).is.eql(\"shima\")})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "0ba86963aa51c2087931c5009f5c7e1cae475a051ece6ae40039f63dd411fb07",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/orders/{{orderId_env}}",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"orders",
+						"{{orderId_env}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatecustomername",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "0ba86963aa51c2087931c5009f5c7e1cae475a051ece6ae40039f63dd411fb07",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\": \"shima\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/orders/{{orderId_env}}",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"orders",
+						"{{orderId_env}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.unset(orderId_env);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "0ba86963aa51c2087931c5009f5c7e1cae475a051ece6ae40039f63dd411fb07",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BOOK_Url_collect}}/orders/{{orderId_env}}",
+					"host": [
+						"{{BOOK_Url_collect}}"
+					],
+					"path": [
+						"orders",
+						"{{orderId_env}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BOOK_Url_collect",
+			"value": "https://simple-books-api.glitch.me",
+			"type": "string"
+		}
+	]
+}
